@@ -1,0 +1,44 @@
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block contents %}
+
+<!-- Portfolio Grid-->
+<section class="page-section bg-light" id="portfolio">
+    <div class="container">
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <!-- Name input-->
+                <input name="title" value="{{ post.title }}" placeholder="제목을 입력해주세요." class="form-control" type="text">
+            </div>
+            <br/>
+
+            <textarea name="contents" id="summernote">{{ post.contents }}</textarea>
+            <br/>
+            <div class="text-center">
+                <button class="btn btn-primary btn-xl text-uppercase" id="submitButton" type="submit">게시글 작성</button>
+            </div>
+        </form>
+        <script>
+      $('#summernote').summernote({
+        placeholder: '내용을 입력해주세요.',
+        tabsize: 2,
+        height: 120,
+        toolbar: [
+          ['style', ['style']],
+          ['font', ['bold', 'underline', 'clear']],
+          ['color', ['color']],
+          ['para', ['ul', 'ol', 'paragraph']],
+          ['table', ['table']],
+          ['insert', ['link', 'picture', 'video']],
+          ['view', ['fullscreen', 'codeview', 'help']]
+        ]
+      });
+
+
+        </script>
+    </div>
+</section>
+{% endblock %}
