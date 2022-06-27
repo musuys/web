@@ -28,6 +28,7 @@
         </div>
 
         <hr/>
+
         <form action="/reply/create/{{ post.id }}" method="post">
             {% csrf_token %}
             <div class="row">
@@ -40,6 +41,7 @@
                             id="submitButton" type="submit">
                         댓글 작성
                     </button>
+
                 </div>
             </div>
         </form>
@@ -53,7 +55,15 @@
 
                     <div class="timeline-panel">
                         <div class="timeline-body"><p class="text-muted">{{reply.contents}}</p></div>
+
                     </div>
+
+                    {% if request.user == reply.writer %}
+                    <button onclick="location.href='/reply/update/{{ reply.id }}'" class="btn btn-primary">댓글수정</button>
+                    <button onclick="location.href='/reply/delete/{{ reply.id }}'" class="btn btn-primary">댓글삭제</button>
+
+                    {% endif %}
+
                 </li>
                 {% endfor %}
 

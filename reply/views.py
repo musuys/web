@@ -36,11 +36,28 @@ def read(request, rid):
     return render(request, 'reply/read.html', {'reply':reply})
 
 
+@login_required(login_url='/user/login')
 def delete(request, rid):
     reply = Reply.objects.get(id=rid)
-    reply.delete()
 
-    return redirect('/reply/list')
+    if request.user != reply.writer:
+        return redirect('/reply/read/'+str(rid))
+
+    reply.delete()
+    return render(request, 'reply/deleteUpdate.html')
+
+
+
+
+
+#     def deleteGet(request, bid):
+#         post = Post.objects.get(id=bid)
+#         if request.user != post.writer:
+#             return redirect('/board/read/' + str(bid))
+#
+#         post.delete()
+#
+#         return redirect('/board/list')
 
 def update(request, rid):
     reply = Reply.objects.get(id=rid)
@@ -52,4 +69,4 @@ def update(request, rid):
         if replyForm.is_valid():
             reply = replyForm.save(commit=False)
             reply.save()
-        return redirect('/reply/read/' + str(reply.id))
+        return redirect('/reply/update/' + str(reply.id))
