@@ -1,0 +1,24 @@
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block contents %}
+
+<!-- Portfolio Grid-->
+<section class="page-section bg-light" id="portfolio">
+    <div class="container">
+        <form method="post">
+            {% csrf_token %}
+
+
+            <textarea name="contents">{{ reply.contents }}</textarea>
+            <br/>
+            <div class="text-center">
+                <button class="btn btn-primary btn-xl text-uppercase" id="submitButton" type="submit">댓글 수정</button>
+            </div>
+        </form>
+
+
+    </div>
+</section>
+{% endblock %}
