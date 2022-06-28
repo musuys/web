@@ -21,7 +21,13 @@
                                 <div class="portfolio-hover">
                                     <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                                 </div>
+                                {% if post.image is not None %}
+                                <img class="img-fluid" src = "/media/{{ post.image }}" alt="..." width="380" height="500">
+
+                                {% else %}
                                 <img class="img-fluid" src="{% static 'assets/img/portfolio/1.jpg' %}" alt="..." />
+                                {% endif %}
+
                             </a>
                             <div class="portfolio-caption">
                                 <div class="portfolio-caption-heading"> {{ post.title }} </div>

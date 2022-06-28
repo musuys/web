@@ -8,3 +8,4 @@ class Post(models.Model):
     create_date = models.DateTimeField(auto_now_add=True)
     writer = models.ForeignKey(User, on_delete=models.CASCADE)
     like = models.ManyToManyField(User, related_name='likes', blank=True)
+    image = models.ImageField(upload_to='images/', blank=True, null=True)

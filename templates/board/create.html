@@ -7,7 +7,7 @@
 <!-- Portfolio Grid-->
 <section class="page-section bg-light" id="portfolio">
     <div class="container">
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="form-group">
                 <!-- Name input-->
@@ -20,6 +20,8 @@
             <div class="text-center">
                 <button class="btn btn-primary btn-xl text-uppercase" id="submitButton" type="submit">게시글 작성</button>
             </div>
+
+            <input multiple type="file" name="image" accept="image/*" id="id_image">
         </form>
         <script>
       $('#summernote').summernote({
@@ -40,5 +42,6 @@
 
         </script>
     </div>
+
 </section>
 {% endblock %}

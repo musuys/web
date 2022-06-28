@@ -46,8 +46,8 @@ urlpatterns = [
     path('user/login', user.views.login),
     path('user/logout', user.views.logout),
     path('user/delete', user.views.delete),
-    path('user/update', user.views.update),
-
+    path('user/changePw', user.views.change_password),
     path('like/<int:bid>', board.views.like),
 
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

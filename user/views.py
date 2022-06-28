@@ -1,8 +1,11 @@
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordChangeForm, UserChangeForm
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
-from django.contrib.auth import login as auth_login
+from django.contrib.auth import login as auth_login, update_session_auth_hash
 from django.contrib.auth import logout as auth_logout
+from django.views.decorators.http import require_http_methods
 
 def logout(request):
     auth_logout(request)
@@ -45,20 +48,19 @@ def delete(request):
     return redirect('/user/login')
 
 
-def update(request):
-    if request.method == "POST":
-        # updating
-        user_change_form = UserChangeForm(data=request.POST, instance=request.user)
 
-        if user_change_form.is_valid():
-            user = user_change_form.save()
-
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Important!
+            messages.success(request, 'Your password was successfully updated!')
+            return redirect('/user/login')
+        else:
+            messages.error(request, 'Please correct the error below.')
     else:
-        # editting
-        user_change_form = UserChangeForm(instance=request.user)
-
-        context = {
-            'user_change_form': user_change_form,
-        }
-
-        return render(request, 'update.html', context)
+        form = PasswordChangeForm(request.user)
+    return render(request, 'user/change_password.html', {
+        'form': form
+    })

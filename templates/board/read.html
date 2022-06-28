@@ -14,9 +14,12 @@
                     <h2 class="text-uppercase">{{ post.title }}</h2>
                     <p class="item-intro text-muted">{{ post.writer }}</p>
                     <img class="img-fluid d-block mx-auto" src="assets/img/portfolio/1.jpg" alt="...">
+                    <img src = "/media/{{ post.image }}" width="350" height="500">
+
                     <p>
                         {{ post.contents | safe }}
                     </p>
+
 
                     {% if request.user == post.writer %}
                     <a href="/board/update/{{ post.id }}" class="btn btn-primary">수정</a>

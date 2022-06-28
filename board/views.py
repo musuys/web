@@ -1,3 +1,5 @@
+import os
+
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.http import JsonResponse
@@ -5,6 +7,7 @@ from django.shortcuts import render, redirect
 
 from board.forms import PostForm
 from board.models import Post
+from config import settings
 from reply.forms import ReplyForm
 
 @login_required(login_url='/user/login')
@@ -34,9 +37,12 @@ def create(request):
         if postForm.is_valid():
             post = postForm.save(commit=False)
             post.writer = request.user
+            #######
+            post.image = request.FILES.get('image', None)
             post.save()
 
-        return redirect('/board/read/' + str(post.id))
+            ########
+            return redirect('/board/read/' + str(post.id))
 
 
 def listGet(request):
@@ -84,6 +90,9 @@ def update(request, bid):
     elif request.method == "POST":
         postForm = PostForm(request.POST, instance=post)
         if postForm.is_valid():
+
             post = postForm.save(commit=False)
+
+            post.image = request.FILES.get('image', None)
             post.save()
         return redirect('/board/read/' + str(post.id))

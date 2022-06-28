@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import PasswordChangeForm
 from django.shortcuts import render, redirect
 
 from board.models import Post
@@ -70,3 +71,5 @@ def update(request, rid):
             reply = replyForm.save(commit=False)
             reply.save()
         return redirect('/reply/update/' + str(reply.id))
+
+
